@@ -1,0 +1,194 @@
+
+.mod_pyramid_listbuttons input[type="submit"]{
+	width: 400px;
+	/*float: left;*/
+}
+
+.mod_pyramid_actionbuttons {
+	display: flex;
+	float: right;
+}
+
+
+/**
+ * User plan
+ */
+.path-mod-pyramid .userplan {
+    width: 100%;
+    margin: 1em auto 1em auto;
+    /**font-size: 80%;*/
+    border: 1px solid #ddd;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.path-mod-pyramid .userplan dt {
+    vertical-align: bottom;
+    white-space: normal;
+    color: #999;
+    border-bottom: 1px solid #ddd;
+    padding: 3px;
+}
+
+.path-mod-pyramid .userplan dt.active {
+    vertical-align: top;
+    color: black;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    border-top: 0;
+    background: #e7f1c3;
+}
+
+.path-mod-pyramid .userplan dt.active .phasetitle {
+    font-size: 140%;
+}
+
+.path-mod-pyramid .userplan dl {
+    width: 25%;
+    float: left;
+    margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .path-mod-pyramid .userplan {
+        border-right: none;
+        border-top: none;
+    }
+
+    .path-mod-pyramid .userplan dl {
+        width: 102%;
+        border-right: none;
+    }
+
+    .path-mod-pyramid .userplan dt {
+        float: left;
+        width: 30%;
+        border-bottom: none;
+        border-top: 1px solid #ddd;
+    }
+    .path-mod-pyramid .userplan dt.active {
+        border: none;
+    }
+
+    .path-mod-pyramid .userplan dd {
+        float: left;
+        width: 65%;
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .path-mod-pyramid .userplan {
+        border-bottom: none;
+    }
+
+    .path-mod-pyramid .userplan dt {
+        float: left;
+        width: 70%;
+        border-bottom: none;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .path-mod-pyramid .userplan dd {
+        float: left;
+        width: 70%;
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+.path-mod-pyramid .userplan dd {
+    vertical-align: top;
+    border-right: 1px solid #ddd;
+    background-color: #f5f5f5;
+    margin: 0;
+    min-height: 180px;
+    padding: 5px;
+}
+
+.path-mod-pyramid .userplan dd,
+.path-mod-pyramid .userplan dd a,
+.path-mod-pyramid .userplan dd a:link,
+.path-mod-pyramid .userplan dd a:hover,
+.path-mod-pyramid .userplan dd a:visited,
+.path-mod-pyramid .userplan dd a:active {
+    color: #999;
+}
+
+.path-mod-pyramid .userplan dd.active,
+.path-mod-pyramid .userplan dd.active a,
+.path-mod-pyramid .userplan dd.active a:link,
+.path-mod-pyramid .userplan dd.active a:hover,
+.path-mod-pyramid .userplan dd.active a:visited,
+.path-mod-pyramid .userplan dd.active a:active {
+    color: black;
+}
+
+.path-mod-pyramid .userplan dd.lastcol {
+    border-right: 0;
+}
+
+.path-mod-pyramid .userplan dd.active {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    background-color: #e7f1c3;
+}
+
+.path-mod-pyramid .userplan dt .actions {
+    font-size: smaller;
+}
+
+.path-mod-pyramid .userplan dd.phasetasks li {
+    background-image: url([[pix:mod_workshop|userplan/task-todo]]);
+    background-position: top left;
+    background-repeat: no-repeat;
+    list-style-type: none;
+    min-height: 16px;
+    margin: .3em 0;
+}
+
+.dir-rtl.path-mod-pyramid .userplan dd.phasetasks li {
+    background-position: top right;
+}
+
+.path-mod-pyramid .userplan dd.phasetasks li.completed {
+    background-image: url([[pix:mod_workshop|userplan/task-done]]);
+}
+
+.path-mod-pyramid .userplan dd.phasetasks li.fail {
+    background-image: url([[pix:mod_workshop|userplan/task-fail]]);
+}
+
+.path-mod-pyramid .userplan dd.phasetasks li.info {
+    background-image: url([[pix:mod_workshop|userplan/task-info]]);
+}
+
+.path-mod-pyramid .userplan dd.phasetasks .tasks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.path-mod-pyramid .userplan dd.phasetasks .title {
+    padding: 0 10px 0 20px;
+}
+
+.dir-rtl.path-mod-pyramid .userplan dd.phasetasks .title {
+    padding: 0 20px 0 10px;
+}
+
+.path-mod-pyramid .userplan dd.phasetasks .details {
+    padding: 0 10px 0 25px;
+    font-size: 80%;
+}
+
+.dir-rtl.path-mod-pyramid .userplan dd.phasetasks .details {
+    padding: 0 25px 0 10px;
+}
