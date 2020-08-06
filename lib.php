@@ -968,6 +968,7 @@ function pyramid_print_recent_mod_activity($activity, $courseid, $detail, $modna
  */
 function pyramid_cron()
 {
+
     return true;
 }
 
