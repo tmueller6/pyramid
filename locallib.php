@@ -116,7 +116,7 @@ class pyramid
 
     /**
      *
-     * @return moodle_url of this workshop's view page
+     * @return boolean of this pyramid's view page
      */
     public function view_url()
     {
@@ -125,6 +125,37 @@ class pyramid
             'id' => $this->cm->id
         ));
     }
+
+    /**
+     *
+     * @return boolean Überprüfung Status der Einreichung
+     */
+    public function check_submission($groupid, $pyramid_id)
+    {
+        global $DB;
+        if($DB->record_exists('pyramid_submission', array("pyramid_id"=>$pyramid_id, "group_id"=>$groupid,"current_version"=>1))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @return boolean Überprüfung Zeit der letzten Einreichung
+     */
+    public function check_submission_time($groupid, $pyramid_id)
+    {
+        global $DB;
+        $timemodified = $DB->get_field('pyramid_submission', 'timemodified', array("pyramid_id"=>$pyramid_id, "group_id"=>$groupid,"current_version"=>1));
+        if($timemodified == false){
+            return "nicht abgegeben";
+        }else{
+            $timemodified = date("H:i d.m.yy", $timemodified);
+            return $timemodified;
+        }
+    }
+
 
     /**
      *
@@ -143,7 +174,7 @@ class pyramid
     }
 
     /**
-     * Switch to a new workshop phase
+     * Switch to a new pyramid phase
      *
      * Modifies the underlying database record. You should terminate the script shortly after calling this.
      *
@@ -160,20 +191,6 @@ class pyramid
             return false;
         }
 
-        /*
-         * if (self::PHASE_CLOSED == $newphase) {
-         * // push the grades into the gradebook
-         * $workshop = new stdclass();
-         * foreach ($this as $property => $value) {
-         * $workshop->{$property} = $value;
-         * }
-         * $workshop->course = $this->course->id;
-         * $workshop->cmidnumber = $this->cm->id;
-         * $workshop->modname = 'workshop';
-         * workshop_update_grades($workshop);
-         * }
-         */
-
         $DB->set_field('pyramid', 'phase', $newphase, array(
             'id' => $this->id
         ));
@@ -186,6 +203,9 @@ class pyramid
         return true;
     }
 
+    /**
+     * @return bool[]
+     */
     protected function available_phases_list()
     {
         return array(
@@ -209,7 +229,7 @@ class pyramid
     }
 
     /**         
-     * @return moodle_url of the script to change the current phase to $phasecode
+     * @return moodle_url of the page that is shown, when another user is already editing the submission
      */
     public function notification_url()
     {
@@ -219,6 +239,12 @@ class pyramid
         ));
     }
 
+    /**
+     * @param $userid
+     * @param $pyramidid
+     * @return bool if user is part of the given instance of the pyramid
+     * @throws dml_exception
+     */
     public function check_enrollment($userid,$pyramidid){
       global $DB;
       if($DB->record_exists('pyramid_users', array('pyramid_id'=>$pyramidid, 'userid'=>$userid))){

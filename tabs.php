@@ -20,8 +20,8 @@
 *
 * This file was adapted from the mod/lesson/tabs.php
 *
- * @package mod_pyramid
- * @copyright  2014 Justin Hunt  {@link http://poodll.com}
+ * @package    mod_pyramid
+ * @copyright  2020 Tom Mueller
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
 */
 

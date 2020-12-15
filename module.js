@@ -26,8 +26,6 @@ M.mod_pyramid = M.mod_pyramid || {};
 
 M.mod_pyramid.helper = {
 	gY: null,
-
-
 	 /**
 		 * @param Y
 		 *            the YUI object
@@ -37,9 +35,6 @@ M.mod_pyramid.helper = {
     init: function(Y,opts) {
     	
     	M.mod_pyramid.helper.gY = Y;
-    	// alert(opts['someinstancesetting']);
-    	//console.log(opts['someinstancesetting']);
-    
     },
     
     test: function(Y,opts){
@@ -80,7 +75,7 @@ M.mod_pyramid.switchphase = function get_fb(Y,opts){
 	$('div.feedback-box').html(feedback);
 };
 
-M.mod_pyramid.send_message = function get_fb(Y,opts){
+/*M.mod_pyramid.send_message = function get_fb(Y,opts){
 	var cmid = opts['cmid'];
 	var phase = opts['phase'];
 	var first = opts['first'];
@@ -96,10 +91,8 @@ M.mod_pyramid.send_message = function get_fb(Y,opts){
 		data: {cmid: cmid, phase: phase, first: first, second: second, third: third, fourth: fourth, name: name, users: users, creator: creator},
 		async: false
 	}).done(function(){
-		//setTimeout(function(){get_fb(Y,opts);}, 10000);
-		console.log("test1");
 	}).responseText;
 
 	$('div.feedback-box').html(feedback);
-};
+};*/
 

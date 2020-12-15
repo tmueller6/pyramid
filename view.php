@@ -138,22 +138,22 @@ $renderer = $PAGE->get_renderer('mod_pyramid');
 // From here we actually display the page.
 
 echo $renderer->notabsheader();
-echo $renderer->show_something($moduleinstance->name);
+echo $renderer->show_name($moduleinstance->name);
 echo $renderer->show_intro($moduleinstance, $cm);
 
 if ($moduleinstance->autoswitch == 1) {
     switch ($moduleinstance->phase) {
         case 10:
-            echo $renderer->show_something("Abgabe: " . date('d.m.Y H:m', $moduleinstance->first));
+            echo $renderer->show_name("Abgabe: " . date('d.m.Y H:m', $moduleinstance->first));
             break;
         case 20:
-            echo $renderer->show_something("Abgabe: " . date('d.m.Y H:m', $moduleinstance->second));
+            echo $renderer->show_name("Abgabe: " . date('d.m.Y H:m', $moduleinstance->second));
             break;
         case 30:
-            echo $renderer->show_something("Abgabe: " . date('d.m.Y H:m', $moduleinstance->third));
+            echo $renderer->show_name("Abgabe: " . date('d.m.Y H:m', $moduleinstance->third));
             break;
         case 40:
-            echo $renderer->show_something("Abgabe: " . date('d.m.Y H:m', $moduleinstance->fourth));
+            echo $renderer->show_name("Abgabe: " . date('d.m.Y H:m', $moduleinstance->fourth));
             break;
     }
 }
@@ -183,50 +183,70 @@ if ($pyramid->check_enrollment($USER->id, $pyramid->id)) {
 switch ($pyramid->phase) {
 
     case pyramid::PHASE_1:
-        print_collapsible_region_start('', '1', "Gruppen", false, true);
+        $table = new html_table();
+        $table->head = array('Name', 'Status', 'zuletzt aktualisiert', 'Link zur Gruppe');
         foreach ($gruppen as $key => $value) {
-            if (! ($value == $pyramid->id . '_A') && ! ($value == $pyramid->id . '_B') && ! ($value == $pyramid->id . '_C') && ! ($value == $pyramid->id . '_D') && ! ($value == $pyramid->id . '_E') && ! ($value == $pyramid->id . '_F') && ! ($value == $pyramid->id . '_G')) {
-                echo $renderer->show_container(groups_get_group_name($key), $id, $key);
-                echo "<br>";
+            if (!($value == $pyramid->id . '_A') && !($value == $pyramid->id . '_B') && !($value == $pyramid->id . '_C') && !($value == $pyramid->id . '_D') && !($value == $pyramid->id . '_E') && !($value == $pyramid->id . '_F') && !($value == $pyramid->id . '_G')) {
+                if($pyramid->check_submission($key,$pyramid->id)){
+                    $checksubmission = "abgegeben";
+                }else{
+                    $checksubmission = "nicht abgegeben";
+                }
+                $timemodified = $pyramid->check_submission_time($key, $pyramid->id);
+                $table->data[] = array(groups_get_group_name($key), $checksubmission, $timemodified, $renderer->show_grouplink("Gruppe anzeigen", $id, $key));
             }
         }
-        print_collapsible_region_end();
+        echo html_writer::table($table);
         break;
 
+
     case pyramid::PHASE_2:
-        print_collapsible_region_start('', '1', "Gruppen", false, true);
+        $table = new html_table();
+        $table->head = array('Name', 'Status', 'zuletzt aktualisiert', 'Link zur Gruppe');
         foreach ($gruppen as $key => $value) {
-            if (! ($value == $pyramid->id . '_E') && ! ($value == $pyramid->id . '_F') && ! ($value == $pyramid->id . '_G')) {
-                echo $renderer->show_container(groups_get_group_name($key), $id, $key);
-                echo "<br>";
+            if (!($value == $pyramid->id . '_E') && !($value == $pyramid->id . '_F') && !($value == $pyramid->id . '_G')) {
+                if($pyramid->check_submission($key,$pyramid->id)){
+                    $checksubmission = "abgegeben";
+                }else{
+                    $checksubmission = "nicht abgegeben";
+                }
+                $timemodified = $pyramid->check_submission_time($key, $pyramid->id);
+                $table->data[] = array(groups_get_group_name($key), $checksubmission, $timemodified, $renderer->show_grouplink("Gruppe anzeigen", $id, $key));
             }
         }
-        print_collapsible_region_end();
+        echo html_writer::table($table);
         break;
 
     case pyramid::PHASE_3:
-        print_collapsible_region_start('', '1', "Gruppen", false, true);
-
+        $table = new html_table();
+        $table->head = array('Name', 'Status', 'zuletzt aktualisiert', 'Link zur Gruppe');
         foreach ($gruppen as $key => $value) {
             if (! ($value == $pyramid->id . '_G')) {
-                echo $renderer->show_container(groups_get_group_name($key), $id, $key);
-                echo "<br>";
+                if($pyramid->check_submission($key,$pyramid->id)){
+                    $checksubmission = "abgegeben";
+                }else{
+                    $checksubmission = "nicht abgegeben";
+                }
+                $timemodified = $pyramid->check_submission_time($key, $pyramid->id);
+                $table->data[] = array(groups_get_group_name($key), $checksubmission, $timemodified, $renderer->show_grouplink("Gruppe anzeigen", $id, $key));
             }
         }
-
-        print_collapsible_region_end();
+        echo html_writer::table($table);
         break;
-
     case pyramid::PHASE_4:
-        print_collapsible_region_start('', '1', "Gruppen", false, true);
+        $table = new html_table();
+        $table->head = array('Name', 'Status', 'zuletzt aktualisiert', 'Link zur Gruppe');
         foreach ($gruppen as $key => $value) {
-
-            echo $renderer->show_container(groups_get_group_name($key), $id, $key);
-            echo "<br>";
+            if($pyramid->check_submission($key,$pyramid->id)){
+                $checksubmission = "abgegeben";
+            }else{
+                $checksubmission = "nicht abgegeben";
+            }
+            $timemodified = $pyramid->check_submission_time($key, $pyramid->id);
+            $table->data[] = array(groups_get_group_name($key), $checksubmission, $timemodified, $renderer->show_grouplink("Gruppe anzeigen", $id, $key));
         }
-        print_collapsible_region_end();
+        echo html_writer::table($table);
         break;
-
     default:
 }
 

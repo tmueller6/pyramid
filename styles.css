@@ -16,7 +16,6 @@
 .path-mod-pyramid .userplan {
     width: 100%;
     margin: 1em auto 1em auto;
-    /**font-size: 80%;*/
     border: 1px solid #ddd;
     position: relative;
     overflow: hidden;

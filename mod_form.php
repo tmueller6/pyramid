@@ -110,43 +110,35 @@ class mod_pyramid_mod_form extends moodleform_mod
                 }
             }           
         }
-        /*if(isset($_GET['update'])){
-            if( $currentphase != 10){
-                $mform->disabledIf('usergroup', 'idupdate', 'eq', $_GET['update']);
-            }
-        }*/
-        //$mform->addHelpButton('usergroup', 'usergroup', MOD_PYRAMID_LANG);
-        //$mform->setType('someinstancesetting', PARAM_TEXT);
-
 
         $mform->addElement('header', 'general', "Hilfsbeschreibungen");
-        
+
+        //Hinweise für Einzelphase
         $mform->addElement('textarea', 'phase1', "Hinweise für die Einzelphase", array(
             'rows' => '2', 'cols' => '155'
         ));
         $mform->setType('phase1', PARAM_TEXT);
-        //$mform->addHelpButton('phase1', 'phase1help', MOD_PYRAMID_LANG);
-        
+
+        //Hinweise für 1. Gruppenphase
         $mform->addElement('textarea', 'phase2', "Hinweise für 1. Gruppenphase", array(
             'rows' => '2', 'cols' => '155'
         ));
         $mform->setType('phase2', PARAM_TEXT);
-        //$mform->addHelpButton('phase2', 'phase2help', MOD_PYRAMID_LANG);
-        
+
+        //Hinweise für 2. Gruppenphase
         $mform->addElement('textarea', 'phase3', "Hinweise für die 2. Gruppenphase", array(
             'rows' => '2', 'cols' => '155'
         ));
         $mform->setType('phase3', PARAM_TEXT);
-        //$mform->addHelpButton('phase3', 'phase3help', MOD_PYRAMID_LANG);
-        
+
+        //Hinweise für Abschlussphase
         $mform->addElement('textarea', 'phase4', "Hinweise für die Abschlussphase", array(
             'rows' => '2', 'cols' => '155'
         ));
         $mform->setType('phase4', PARAM_TEXT);
-        //$mform->addHelpButton('phase4', 'phase4help', MOD_PYRAMID_LANG);
+
 
         $mform->addElement('header', 'general', "Abgabedaten");
-
         $mform->addElement('advcheckbox', 'modus', "Modus", "Phasen automatisch wechseln");
         if (isset($_GET['update'])) {
             if ($DB->record_exists(MOD_PYRAMID_TABLE, array(
@@ -155,7 +147,6 @@ class mod_pyramid_mod_form extends moodleform_mod
                 $auto = $DB->get_field(MOD_PYRAMID_TABLE, 'autoswitch', array(
                     'id' => $pyramid_id
                 ));
-
                 if ($auto == 1) {
                     $mform->setDefault('modus', 1);
                 } else {
@@ -189,9 +180,6 @@ class mod_pyramid_mod_form extends moodleform_mod
         // -------------------------------------------------------------------------------
         // add standard buttons, common to all modules
         $this->add_action_buttons();
-
-        // $data = $this->get_data();
-        // var_dump($data);
     }
 
     /**
@@ -231,38 +219,4 @@ class mod_pyramid_mod_form extends moodleform_mod
     {
         return ($data['mingrade'] > 0);
     }
-
-    /*
-     * public function definition_after_data()
-     * {
-     * global $DB, $PAGE;
-     *
-     * parent::definition_after_data();
-     *
-     * $mform = & $this->_form;
-     *
-     * if(isset($_GET ['update'])){
-     * $courseid = $PAGE->course->id;
-     * $id = $_GET['update'];
-     * $modinfo = get_fast_modinfo($courseid);
-     * $cm = $modinfo->get_cm($id);
-     * $pyramid_id = $cm->instance;
-     *
-     *
-     * /*foreach ($pyramid as $key => $value) {
-     * $exp_key = explode('-', $key);
-     * if ($exp_key[0] == 'student') {
-     * $result = $exp_key[1];
-     * $DB->insert_record(MOD_PYRAMID_USERS, array(
-     * 'name' => $cm->name,
-     * 'userid' => $result,
-     * 'pyramid_id' => $pyramid_id
-     * ));
-     * }
-     * }
-     *
-     * $DB->record_exists(MOD_PYRAMID_TABLE, array('id'=>$pyramid_id));
-     * }
-     * }
-     */
 }

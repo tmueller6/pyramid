@@ -1,4 +1,4 @@
-<?php /** @noinspection LossyEncoding */
+<?php
 
 use availability_grouping\condition;
 
@@ -71,8 +71,6 @@ function pyramid_supports($feature)
             return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
-        // case FEATURE_GRADE_HAS_GRADE: return true;
-        // case FEATURE_GRADE_OUTCOMES: return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_GROUPS:
@@ -494,6 +492,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         7 => "G"
     ];
 
+    //Erstellung der Gruppen für die Einzelphase
     for ($i = 0; $i < count($users); $i ++) {
 
         $firstname = $DB->get_field('user', 'firstname', array(
@@ -512,6 +511,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         groups_assign_grouping($pyramid->groupingid, $groupid);
     }
 
+    //Erstellung der Gruppen für die 1. Gruppenphase
     for ($i = 1; $i <= 4; $i ++) {
 
         $data->name = 'Gruppenphase 1-' . $pyramid->name . '-Gruppe ' . $letters[$i];
@@ -524,6 +524,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         groups_assign_grouping($pyramid->groupingid, $groupid);
     }
 
+    //Erstellung der Gruppen für die 2. Gruppenphase
     for ($i = 5; $i <= 6; $i ++) {
 
         $data->name = 'Gruppenphase 2-' . $pyramid->name . '-Gruppe ' . $letters[$i];
@@ -536,6 +537,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         groups_assign_grouping($pyramid->groupingid, $groupid);
     }
 
+    //Erstellung der Gruppen für die Abschlussphase
     $data->name = 'Abschlussphase-' . $pyramid->name . '-Gruppe ' . $letters[7];
     $data->description = 'Gruppe fuer Phase 4';
     $data->idnumber = $id . '_' . $letters[$i];
@@ -547,6 +549,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
     }
     groups_assign_grouping($pyramid->groupingid, $groupid);
 
+    //Zuordnung der Teilnehmer in die verschiedenen Gruppen
     $id1 = $DB->get_field('groups', 'id', array(
         'courseid' => (int)$pyramid->course,
         'idnumber' => $id . '_A'
@@ -647,6 +650,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         groups_add_member($id6, $x->id);
     }
 
+    //Gruppierung wird dem Modul zugeordnet
     $DB->set_field('course_modules', 'groupingid', $grouping, array(
         'id' => (int)$pyramid->coursemodule,
         "course" => (int)$pyramid->course,
@@ -657,6 +661,7 @@ function pyramid_add_instance(stdClass $pyramid, mod_pyramid_mod_form $mform = n
         \availability_grouping\condition::get_json($grouping)
     ]);
 
+    //Nur Mitglieder der Gruppierung können den Kurs einsehen
     $DB->set_field('course_modules', 'availability', json_encode($restriction), array(
         'id' => (int)$pyramid->coursemodule,
         "course" => (int)$pyramid->course,
@@ -687,11 +692,11 @@ function pyramid_update_instance(stdClass $pyramid, mod_pyramid_mod_form $mform 
     $cm = $modinfo->get_cm($pyramid->coursemodule);
 
     $pyramid->timemodified = time();
-
-
+    
     $pyramid->id = $pyramid->instance;
     $pyramid->autoswitch = $pyramid->modus;
 
+    //Teilnehmer*innen nach Erstellung der Aktivität hinzufügen oder entfernen
     foreach ($pyramid as $key => $value) {
         $exp_key = explode('-', $key);
         if ($exp_key[0] == 'student') {
@@ -731,7 +736,6 @@ function pyramid_update_instance(stdClass $pyramid, mod_pyramid_mod_form $mform 
     foreach ($groupingusers as $x) {
         $groupingu[] = $x->id;
     }
-
 
     // User Differenz
     $resultremove = array_values(array_diff($groupingu, $users));
@@ -861,19 +865,11 @@ function pyramid_delete_instance($id)
         return false;
     }
 
-    // Delete any dependent records here #
-
-    /*
-     * $DB->delete_records(MOD_PYRAMID_USERS, array(
-     * 'id' => $pyramid->id
-     * ));
-     */
     $DB->delete_records(MOD_PYRAMID_TABLE, array(
         'id' => $pyramid->id
     ));
 
     $DB->delete_records_select('groups', "courseid = " . $pyramid->course . " AND idnumber LIKE '" . $pyramid->id . "_%%'");
-    // $DB->delete_records('groups', array("courseid" =>$pyramid->course, "idnumber" => $pyramid->id."_%%"));
 
     return true;
 }
@@ -964,7 +960,6 @@ function pyramid_print_recent_mod_activity($activity, $courseid, $detail, $modna
  * as sending out mail, toggling flags etc ...
  *
  * @return boolean
- * @todo Finish documenting this function
  */
 function pyramid_cron()
 {

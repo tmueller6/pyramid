@@ -17,18 +17,14 @@
 
 /**
  *
- * @package mod_workshop
- * @copyright 2009 David Mudrak <david.mudrak@gmail.com>
+ * @package mod_pyramid
+ * @copyright 2020 Tom Mueller
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require (__DIR__ . '/../../config.php');
 require_once (__DIR__ . '/locallib.php');
 
 $cmid = required_param('cmid', PARAM_INT); // course module
-/*
- * $phase = required_param('phase', PARAM_INT); // the code of the new phase
- * $confirm = optional_param('confirm', false, PARAM_BOOL); // confirmation
- */
 
 $cm = get_coursemodule_from_id('pyramid', $cmid, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', array(
@@ -44,29 +40,14 @@ $PAGE->set_url($pyramid->notification_url(), array(
 ));
 
 require_login($course, false, $cm);
-// require_capability('mod/pyramid:switchphase', $PAGE->context);
-
-/*
- * if ($confirm) {
- * if (!confirm_sesskey()) {
- * throw new moodle_exception('confirmsesskeybad');
- * }
- * if (!$pyramid->switch_phase($phase)) {
- * print_error('errorswitchingphase', 'workshop', $pyramid->view_url());
- * }
- * redirect($pyramid->view_url());
- * }
- */
 
 $PAGE->set_title($pyramid->name);
 $PAGE->set_heading($course->fullname);
-// $PAGE->navbar->add(get_string('switchingphase', 'workshop'));
 
 //
 // Output starts here
 //
 echo $OUTPUT->header();
-
 echo $OUTPUT->heading($pyramid->name);
 echo $OUTPUT->notification("Ein/eine anderer/andere Nutzer*in bearbeitet gerade den Eintrag. Bitte versuchen Sie es später noch einmal.", 'warning');
 echo $OUTPUT->continue_button($pyramid->view_url());

@@ -290,7 +290,7 @@ if(isset($_POST['groupid'])) {
         $name = groups_get_group_name($groupid);
 
 
-        echo $renderer->show_something($name);
+        echo $renderer->show_name($name);
 
         $members = groups_get_members($groupid, $fields = 'u.*', $sort = 'lastname ASC');
 

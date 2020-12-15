@@ -28,13 +28,13 @@ class mod_pyramid_renderer extends plugin_renderer_base {
 
 
 
-    /*
-     Returns the header for the module
-      @param mod $instance
-      @param string $currenttab current tab that is shown.
-      @param int    $item id of the anything that needs to be displayed.
-      @param string $extrapagetitle String to append to the page title.
-      @return string
+    /**
+     * Returns the header for the module
+     * @param mod $instance
+     * @param string $currenttab current tab that is shown.
+     * @param int    $item id of the anything that needs to be displayed.
+     * @param string $extrapagetitle String to append to the page title.
+     * @return string
      */
     
     public function header($moduleinstance, $cm, $currenttab = '', $itemid = null, $extrapagetitle = null) {
@@ -50,14 +50,12 @@ class mod_pyramid_renderer extends plugin_renderer_base {
         // Build the buttons
         $context = context_module::instance($cm->id);
 
-    /// Header setup
+        //Header setup
         $this->page->set_title($title);
         $this->page->set_heading($this->page->course->fullname);
         $output = $this->output->header();
 
         if (has_capability('mod/pyramid:manage', $context)) {
-         //   $output .= $this->output->heading_with_help($activityname, 'overview', MOD_PYRAMID_LANG);
-
             if (!empty($currenttab)) {
                 ob_start();
                 include($CFG->dirroot.'/mod/pyramid/tabs.php');
@@ -67,8 +65,6 @@ class mod_pyramid_renderer extends plugin_renderer_base {
         } else {
             $output .= $this->output->heading($activityname);
         }
-	
-
         return $output;
     }
 	
@@ -83,7 +79,7 @@ class mod_pyramid_renderer extends plugin_renderer_base {
     /**
      *
      */
-    public function show_something($showtext) {
+    public function show_name($showtext) {
 		$ret = $this->output->box_start();
 		$ret .= $this->output->heading($showtext, 3, 'main');
 		$ret .= $this->output->box_end();
@@ -91,7 +87,7 @@ class mod_pyramid_renderer extends plugin_renderer_base {
     }
     
     
-    public function show_container($showtext, $id, $groupid){
+    public function show_grouplink($showtext, $id, $groupid){
         $ret = $this->output->container_start();
         $ret .= $this->output->single_button(new moodle_url('viewgroup.php',  array('id'=>$id, 'groupid'=>$groupid)), $showtext, 'post');
         $ret .= $this->output->container_end();
@@ -256,16 +252,9 @@ class mod_pyramid_report_renderer extends plugin_renderer_base {
 	}
 	
 	public function render_exportbuttons_html($cm,$formdata,$showreport){
-		//convert formdata to array
 		$formdata = (array) $formdata;
 		$formdata['id']=$cm->id;
 		$formdata['report']=$showreport;
-		/*
-		$formdata['format']='pdf';
-		$pdf = new single_button(
-			new moodle_url(MOD_PYRAMID_URL . '/reports.php',$formdata),
-			get_string('exportpdf',MOD_PYRAMID_LANG), 'get');
-		*/
 		$formdata['format']='csv';
 		$excel = new single_button(
 			new moodle_url(MOD_PYRAMID_URL . '/reports.php',$formdata), 
@@ -354,13 +343,11 @@ class mod_pyramid_report_renderer extends plugin_renderer_base {
        */
     function show_paging_bar($totalcount,$paging,$baseurl){
 		$pagevar="pageno";
-		//add paging params to url (NOT pageno)
 		$baseurl->params(array('perpage'=>$paging->perpage,'sort'=>$paging->sort));
     	return $this->output->paging_bar($totalcount,$paging->pageno,$paging->perpage,$baseurl,$pagevar);
     }
 	
 	function show_reports_footer($moduleinstance,$cm,$formdata,$showreport){
-		// print's a popup link to your custom page
 		$link = new moodle_url(MOD_PYRAMID_URL . '/reports.php',array('report'=>'menu','id'=>$cm->id,'n'=>$moduleinstance->id));
 		$ret =  html_writer::link($link, get_string('returntoreports',MOD_PYRAMID_LANG));
 		$ret .= $this->render_exportbuttons_html($cm,$formdata,$showreport);

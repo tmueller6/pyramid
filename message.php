@@ -17,8 +17,8 @@
 
 /**
  *
- * @package mod_workshop
- * @copyright 2009 David Mudrak <david.mudrak@gmail.com>
+ * @package mod_pyramid
+ * @copyright 2020 Tom Mueller
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require (__DIR__ . '/../../config.php');
@@ -53,8 +53,6 @@ switch($phase) {
     case 10:
 
         $message->userto = 3;
-
-//$messageid = message_send($message);
 
 }
 

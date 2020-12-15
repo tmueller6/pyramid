@@ -18,8 +18,8 @@
 /**
  * Change the current phase of the workshop
  *
- * @package    mod_workshop
- * @copyright  2009 David Mudrak <david.mudrak@gmail.com>
+ * @package    mod_pyramid
+ * @copyright  2020 Tom Müller <david.mudrak@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -52,7 +52,6 @@ if ($confirm) {
 
 $PAGE->set_title($pyramid->name);
 $PAGE->set_heading($course->fullname);
-//$PAGE->navbar->add(get_string('switchingphase', 'workshop'));
 
 //
 // Output starts here

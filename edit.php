@@ -302,13 +302,10 @@ if (isset($gruppen)) {
 
         redirect($CFG->wwwroot . '/mod/pyramid/view.php?id=' . $cm->id);
     } else if ($fromform = $form->get_data()) {
-        // If data submitted, then process and store.
 
-        // Prevent CSFR.
         confirm_sesskey();
         $timenow = time();
 
-        // This will be overwriten after being we have the entryid.
 
         $oldentry = new StdClass();
         $newentry = new stdClass();

@@ -42,18 +42,6 @@ function xmldb_pyramid_upgrade($oldversion) {
     global $DB;
 
     $dbman = $DB->get_manager(); // loads ddl manager and xmldb classes
-
-    // And upgrade begins here. For each one, you'll need one
-    // block of code similar to the next one. Please, delete
-    // this comment lines once this file start handling proper
-    // upgrade code.
-
-    // if ($oldversion < YYYYMMDD00) { //New version in version.php
-    //
-    // }
-
-
-    // Final return of upgrade result (true, all went good) to Moodle.
     
     
     return true;

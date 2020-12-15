@@ -13,29 +13,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Form for student-view of a group
+ *
+ * @package mod_pyramid
+ * @copyright 2020 Tom Mueller
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once ($CFG->dirroot . '/lib/formslib.php');
 
 class mod_pyramid_view_form extends moodleform
 {
-
     public function definition()
     {
-        /*
-         * if (!($this->_customdata['pyramid_phase'] == 10)) {
-         * $this->_form->addElement('textarea', 'text1', 'Text 1', array(
-         * 'readonly' => 'true',
-         * 'rows' => '10',
-         * 'cols' => '180'
-         * ));
-         * $this->_form->addElement('textarea', 'text2', 'Text 2', array(
-         * 'readonly' => 'true',
-         * 'rows' => '10',
-         * 'cols' => '180'
-         * ));
-         * }
-         */
         $this->_form->addElement('textarea', 'text1', 'Aktuelle Version der Gruppe', array(
             'readonly' => 'true',
             'rows' => '10',
@@ -46,6 +40,5 @@ class mod_pyramid_view_form extends moodleform
 
         $this->_form->addElement('hidden', 'groupid');
         $this->_form->setType('groupid', PARAM_INT);
-        //$this->add_action_buttons($cancel=true, $submit=false);
     }
 }

@@ -20,7 +20,7 @@
  * lib.php/modulename_install() post installation hook and partially defaults.php
  *
  * @package    mod_pyramid
- * @copyright  2020 Tom Mueller <your@email.adress>
+ * @copyright  2020 Tom Mueller
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
